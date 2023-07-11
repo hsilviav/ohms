@@ -1,7 +1,5 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 import random
-from ohms_app.models import Patient, HealthMetric
 
 # Create your views here.
 

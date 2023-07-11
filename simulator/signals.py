@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from ohms_app.models import Patient, HealthMetric
+from ohms_app.models import HealthMetric
 from simulator.models import Smartwatch
 
 @receiver(post_save, sender=Smartwatch)

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .forms import SensorDataForm
-from .models import CustomUser, Doctor, Patient, HealthMetric
+from .models import Doctor, Patient, HealthMetric
 from .utils import isInRange
 
 # Create your views here.
