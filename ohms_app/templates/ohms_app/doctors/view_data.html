@@ -1,0 +1,43 @@
+{% extends 'ohms_app/base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block head%}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+{% endblock %}
+
+{% block content %}
+    <h2>Patient {{ patient.first_name }} {{ patient.last_name }}</h2>
+    <a href="{% url 'view_patients' %}">
+        <button class="btn btn-outline-dark" style="margin-top: 10px;">Go Back</button>
+    </a>
+        <table style="margin-top: 50px;">
+            <thead>
+                <tr>
+                    <th>Pulse</th>
+                    <th>Systolic</th>
+                    <th>Diastolic</th>
+                    <th>Body Temperature</th>
+                    <th>Steps</th>
+                    <th>Calories</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in health_metrics %}
+                    <tr>
+                        <td {% if not m.pulse_in_range %}class="highlight-y" {% endif %}>{% if m.pulse == 0 %}-{% else %}{{ m.pulse }} bpm{% endif %}</td>
+                        <td {% if not m.systolic_in_range %}class="highlight-y" {% endif %}>{% if m.systolic == 0 %}-{% else %}{{ m.systolic }} mmHg{% endif %}</td>
+                        <td {% if not m.diastolic_in_range %}class="highlight-y" {% endif %}>{% if m.diastolic == 0 %}-{% else %}{{ m.diastolic }} mmHg{% endif %}</td>
+                        <td {% if not m.body_in_range %}class="highlight-y" {% endif %}>{% if m.body_temperature == 0 %}-{% else %}{{ m.body_temperature }}&deg;C{% endif %}</td>
+                        <td {% if not m.steps_in_range %}class="highlight-y" {% endif %}>{% if m.steps == 0 %}-{% else %}{{ m.steps }}{% endif %}</td>
+                        <td {% if not m.calories_in_range %}class="highlight-y" {% endif %}>{% if m.calories == 0 %}-{% else %}{{ m.calories }}{% endif %}</td>
+                        <td>{{ m.date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'ohms_app/base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+
+
+    {% if user.is_authenticated %}
+        <div id="home-main">
+            <h2>Welcome to the Online Health Management System</h2>
+
+            {% if success %}
+                <script>
+                    Swal.fire({
+                        title: 'Data was submitted succesffully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                </script>
+            {% endif %}
+        </div>
+    {% else %}
+        
+        <p><a href="{% url 'login' %}" class="btn btn-outline-success" style="margin-top: 100px; padding: 16px 32px; font-size: 24px;">LOGIN</a></p>
+    {% endif %}
+
+
+
+{% endblock %}

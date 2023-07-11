@@ -1,0 +1,168 @@
+<!-- base.html -->
+<!doctype html>
+<html>
+<head>
+	<style type="text/css">
+
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+		    .sidenav {
+			height:100%;
+			width:160px;
+			position: fixed;
+			z-index:1;
+			top:0;
+			left:0;
+            background: #44A08D;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to bottom, #093637, #44A08D);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to bottom, #093637, #44A08D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+			overflow-x: hidden;
+			padding-top: 25px;
+            transition: all 0.3s ease;
+		    }    
+
+            .sidenav a {
+			padding: 25px 8px 6px 25px;
+			text-decoration: none;
+			font-size: 20px;
+			color:#CED8F0E5;
+			display:block;
+            }  
+    
+            .sidenav a:active{
+                color:#093637;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            .sidenav a:hover{
+                color:#f1f1f1;
+                text-decoration: none;
+                
+            }
+            
+
+            .main{
+                margin-left:160px;
+                padding: 0px 10px;  
+                background-color: #AECBF52B;
+                height: 100%; 
+                display: flex;  
+                flex-direction: column;        
+            }  
+            
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                padding: 8px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .highlight-y {
+                background-color: yellow;
+            }
+
+            .highlight-r {
+                background-color: red;
+            }
+
+            #content {
+                background-color: #AECBF52B;
+                color: #006269FF;
+                flex: 1;
+                overflow-y: auto;
+            }
+
+            #home-main {
+                color: #003538FF;
+                margin-top: 200px;
+            }
+
+            #patient1-main {
+                color: #003538FF;
+                margin-top: 100px;
+            }
+
+            .logout-btn {
+                position: absolute;
+                bottom: 30px;
+                
+            }
+            
+            
+    </style>
+ 
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Include the SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+
+    <!-- Include the SweetAlert JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+ 
+	<title>{% block title %}OHMS{% endblock %}</title>
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+    <div class="sidenav">
+        {% if user.is_authenticated %}
+		    <a class = "btn-active" href="/">HOME</a>
+            {% if user.role == 'patient' %}
+                <a href="/patients/input">INPUT</a>
+                <a href="/patients/view">VIEW</a>
+            {% elif user.role == 'doctor' %}
+                <a href="/doctors/view_patients">PATIENTS</a>
+            {% endif %}
+            <a href="/profile">PROFILE</a>
+            <a href="{% url 'logout' %}" class="logout-btn">
+                <button class="btn btn-outline-dark">
+                    LOGOUT
+                </button>
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}">
+                <button class="btn btn-outline-light">
+                    LOGIN
+                </button>
+            </a>
+        {% endif %}
+
+	</div>
+    <div id="content" name="content" class="main">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h1 class="mt-2">OHMS</h1>
+                <hr class="mt-0 mb-4" color="#f1f1f1">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        history.replaceState({}, document.title, window.location.href);
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>

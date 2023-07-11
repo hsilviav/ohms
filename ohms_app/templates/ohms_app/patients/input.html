@@ -1,0 +1,48 @@
+{% extends 'ohms_app/base.html' %}
+
+{% block title %}
+Input 
+{% endblock %}
+
+{% block head %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var $j = jQuery.noConflict();
+        $j(document).ready(function() {
+            $j("#get-readings").click(function() {
+                console.log("Button clicked!");
+                $j.ajax({
+                    url: "/simulator/readings",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $j("#id_pulse").val(data.pulse);
+                        $j("#id_systolic").val(data.systolic);
+                        $j("#id_diastolic").val(data.diastolic);
+                        $j("#id_body_temperature").val(data.body_temperature);
+                        $j("#id_steps").val(data.steps);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+    <h2>Sensor Input</h2>
+
+    <button id="get-readings" class="btn btn-outline-primary" style="margin-top: 50px;">Get Readings</button> <br><br>
+    <form method="post" action=" " class="form-group">
+        {% csrf_token %}
+        <div class="group">
+            {{form.as_p}}
+        </div>
+        <a href="{% url 'profile' %}">
+            <button type="submit" class="btn btn-success" style="margin-top: 20px;">Save</button>
+        </a>
+    </form>
+
+{% endblock %}
